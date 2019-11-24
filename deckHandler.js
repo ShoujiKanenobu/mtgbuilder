@@ -2,6 +2,7 @@ const mtg = require('mtgsdk');
 
 const handleList = (req, res) => {
 	console.log("handlelist called");
+	let results = [{}];
 	let deck = req.body.decklist;
 	let parsedList = [];
 
@@ -20,13 +21,13 @@ const handleList = (req, res) => {
 
 			mtg.card.where({name: `${name}`})
 			.then(result => {
-				console.log(result[0].imageUrl);
+				results.push(result);
 			})
 
 
 		}
 	
-	res.status(200).json();
+	res.status(200).json(results);
 };
 
 module.exports = {

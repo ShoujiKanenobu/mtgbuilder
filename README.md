@@ -1,4 +1,3 @@
-# Rate Calculator
-
+# Mtg deck builder
 Homework.
 

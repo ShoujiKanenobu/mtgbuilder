@@ -8,8 +8,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <form action="/saveDeck" method="POST" id="deckForm">  
-	<div>Enter in cards, one card per line.</div>
-  <textarea name="deckListArea" id="decklistArea" placeholder="1 Black Lotus &#13;&#10;1 Jace, the Mind Sculptor" rows="30" cols="50"></textarea>
+	<div>Enter in cards, one card per line. Try inputing cards like "Black Lotus" or "Island"!</div>
+  <textarea name="deckListArea" id="decklistArea"  rows="30" cols="50">1 Black Lotus&#10;1 Jace, the Mind Sculptor</textarea>
   <br>
   Format
   <select name="format" id="formatSelect">  
@@ -32,12 +32,13 @@ const urlBase = "/";
 
 btn.addEventListener('click', function(e) {
   let list = decklist.value; 
+  showArea.innerHTML = "updating...";
   ajaxPostCall(list, (response) => {
-    //showArea.innerHTML = response;
+    showArea.innerHTML = "";
     let parsedResponse = JSON.parse(response);
     for(var i = 0; i < parsedResponse.length; i++)
     {
-      showArea.innerHTML += "<img src= \'" + parsedResponse[i].imageUrl + "\' />" + "<br />";
+      showArea.innerHTML += "<img src=\'" + parsedResponse[i].imageUrl + "\' />";
     }
   })
 });

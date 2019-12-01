@@ -38,7 +38,7 @@ btn.addEventListener('click', function(e) {
     let parsedResponse = JSON.parse(response);
     for(var i = 0; i < parsedResponse.length; i++)
     {
-      showArea.innerHTML += "<img src=\'" + parsedResponse[i].imageUrl + "\' />";
+      showArea.innerHTML += "<img class= \"card\"src=\'" + parsedResponse[i].imageUrl + "\' />";
     }
   })
 });

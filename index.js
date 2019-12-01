@@ -12,5 +12,5 @@ app.use(bodyParser.json());
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 app.get('/', (req, res) => res.render('pages/index'))
-app.post('/saveDeck', handler.handleList)
+app.post('/updateDeck', handler.handleList)
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

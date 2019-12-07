@@ -13,4 +13,5 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 app.get('/', (req, res) => res.render('pages/index'))
 app.post('/updateDeck', handler.handleList)
+app.post('/priceCheck', handler.searchPrice)
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

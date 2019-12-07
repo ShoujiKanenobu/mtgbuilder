@@ -4,30 +4,27 @@
   <% include ../partials/header.ejs %>
 </head>
 <body>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-<form action="/saveDeck" method="POST" id="deckForm">  
-	<div>Enter in cards, one card per line. Try inputing cards like "Black Lotus" or "Island"!</div>
-  <textarea name="deckListArea" id="decklistArea"  rows="30" cols="50">1 Black Lotus&#10;1 Jace, the Mind Sculptor</textarea>
-  <br>
-  Format
-  <select name="format" id="formatSelect">  
-    <option value="Standard	">Standard</option>
-    <option value="Modern">Modern</option>
-    <option value="Legacy">Legacy</option>
-    <option value="Commander">Commander</option>
-  </select>
-  <input type="submit" name="save">
-</form>
-<button id="updateButton">Update</button> 
-
-<div id="showArea"></div>
+  <div class="jumbotron text-center">
+  <h1>Magic The Gathering Deck Viewer</h1>
+  <h3>Now with price checking!</h3>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <div>Enter in cards, one card per line. Try inputing cards like "Black Lotus" or "Island"!</div>
+    <textarea name="deckListArea" id="decklistArea"  rows="30" cols="50">1 Black Lotus&#10;1 Jace, the Mind Sculptor</textarea>
+    <br>
+    </form>
+    <button id="updateButton">Update</button> 
+    <button id="priceButton">Price Check</button> 
+    <div id="priceArea"></div>
+    <div id="showArea"></div>
+  </div>
 
 <script>
 let btn = document.getElementById("updateButton");
+let price = document.getElementById("priceButton");
 let decklist = document.getElementById("decklistArea");
 let showArea = document.getElementById("showArea");
+let priceArea = document.getElementById("priceArea");
 const urlBase = "/";
 
 btn.addEventListener('click', function(e) {
@@ -51,6 +48,36 @@ function ajaxPostCall(list, callBack) {
     }
   };
   xhttp.open("POST", '/updateDeck', true);
+  xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhttp.send("decklist=" + list);
+}
+
+price.addEventListener('click', function(e) {
+  let list = decklist.value; 
+  ajaxPriceCheck(list, (response) => {
+    priceArea.innerHTML = "";
+    let parsedResponse = JSON.parse(response)
+    priceArea.innerHTML += "The total price of the deck is approximately $" + parsedResponse.total + ". <br/>";
+    if(parsedResponse.missedCards.length != 0)
+    {
+      priceArea.innerHTML += "Cards that we couldnt find a price for are: <br/>"
+      for(var i = 0; i < parsedResponse.missedCards.length; i++)
+      {
+        priceArea.innerHTML += parsedResponse.missedCards[i] + "<br/>";
+      }
+    }
+    
+  })
+});
+
+function ajaxPriceCheck(list, callBack) {
+  let xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      callBack(this.responseText);
+    }
+  };
+  xhttp.open("POST", '/priceCheck', true);
   xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xhttp.send("decklist=" + list);
 }

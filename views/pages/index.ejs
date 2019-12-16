@@ -10,7 +10,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script id="lzutf8" src="https://cdn.jsdelivr.net/npm/lzutf8/build/production/lzutf8.js"></script>
-    <div>Enter in cards, one card per line. Try inputing cards like "Black Lotus" or "Island"! All saved decks are saved and loaded by name.</div>
+    <div>Enter in cards, one card per line. Try inputing cards like "Black Lotus" or "Island"! </div>
+    <!--
+      This isnt functional, so I'm commenting it out for now.
     <div>
         <input type="text" name="saveName" id="saveNameArea" />
         <button id="saveButton">Save</button> 
@@ -20,7 +22,7 @@
         <input type="text" name="loadDeck" id="loadDeckArea" />
         <button id="loadButton">Load</button> 
         <div id="LoadDiv"></div>
-    </div>
+    </div> -->
     <textarea name="deckListArea" id="decklistArea"  rows="30" cols="50">1 Black Lotus&#10;1 Jace, the Mind Sculptor</textarea>
     <br>
     </form>
@@ -33,16 +35,17 @@
 <script>
 let btn = document.getElementById("updateButton");
 let price = document.getElementById("priceButton");
-let save = document.getElementById("saveButton");
-let load = document.getElementById("loadButton");
 let decklist = document.getElementById("decklistArea");
-let deckname = document.getElementById("saveNameArea");
-let loadname = document.getElementById("loadDeckArea");
 let showArea = document.getElementById("showArea");
 let priceArea = document.getElementById("priceArea");
-let nameArea = document.getElementById("NameDiv");
-let loadArea = document.getElementById("LoadDiv");
 const urlBase = "/";
+
+// let save = document.getElementById("saveButton");
+// let load = document.getElementById("loadButton");
+// let deckname = document.getElementById("saveNameArea");
+// let loadname = document.getElementById("loadDeckArea");
+// let nameArea = document.getElementById("NameDiv");
+// let loadArea = document.getElementById("LoadDiv");
 
 btn.addEventListener('click', function(e) {
   let list = decklist.value; 

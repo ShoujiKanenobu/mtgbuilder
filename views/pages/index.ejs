@@ -10,7 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script id="lzutf8" src="https://cdn.jsdelivr.net/npm/lzutf8/build/production/lzutf8.js"></script>
-    <div>Enter in cards, one card per line. Try inputing cards like "Black Lotus" or "Island"! All saved decks are saved publicly.</div>
+    <div>Enter in cards, one card per line. Try inputing cards like "Black Lotus" or "Island"! All saved decks are saved and loaded by name.</div>
     <div>
         <input type="text" name="saveName" id="saveNameArea" />
         <button id="saveButton">Save</button> 
@@ -101,6 +101,7 @@ function ajaxPriceCheck(list, callBack) {
 
 save.addEventListener('click', function(e) {
   let list = LZUTF8.compress(decklist.value); 
+  console.log(list);
   let name = deckname.value;
   nameArea.innerHTML = "";
   if(list === "" || name === "")
@@ -135,6 +136,7 @@ load.addEventListener('click', function(e) {
     ajaxLoad(name, (response) => {
       let parsedResponse = JSON.parse(response);
       let parsedDeckList = LZUTF8.decompress(parsedResponse.decklist);
+      console.log(parsedDeckList);
       decklist.value = parsedDeckList;
     })
   }
